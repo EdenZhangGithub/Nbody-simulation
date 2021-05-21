@@ -18,10 +18,10 @@ Body::Body(glm::vec2 pos, glm::vec2 vel, float mass, Texture2D sprite)
 
 void Body::Draw(SpriteRenderer & renderer)
 {
-	renderer.DrawSprite(this->Sprite, this->Position, Size);
+	renderer.DrawSprite(this->Sprite, this->Position - (Size / 2.0f), Size);
 }
 
 void Body::Update(float dt)
 {
-	Position += (Velocity * dt);
+	
 }

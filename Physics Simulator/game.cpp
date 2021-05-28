@@ -40,14 +40,14 @@ void Game::Init()
     ResourceManager::LoadShader("shaders/sprite.vs", "shaders/sprite.frag", nullptr, "sprite");
     // configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->Width),
-        static_cast<float>(this->Height), 0.0f, -1.0f, 1.0f);
+        static_cast<float>(this->Height), 0.0f, -5.0f, 5.0f);
     ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
     ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
     // set render-specific controls
     Shader shader = ResourceManager::GetShader("sprite");
     Renderer = new SpriteRenderer(shader);
     // load textures
-    ResourceManager::LoadTexture("textures/eden_ball.png", true, "body");
+    ResourceManager::LoadTexture("textures/eden_ball3d.png", true, "body");
 
   
     Bodies.emplace_back(glm::vec2(800.0f, 500.0f), glm::vec2(50.0f, 1.0f), 90000.0f, ResourceManager::GetTexture("body"));
@@ -99,10 +99,28 @@ void Game::Render()
     }
 }
 
+int ballId = 0;
 void Game::CenterProjection()
 {
+    
+    glm::vec2 center = Bodies[ballId].Position;
 
-    glm::vec2 center = Bodies[0].Position;
+    if (this->Keys[GLFW_KEY_A])
+    {
+        ballId = (ballId + 1) % 10;
+    }
+    if (this->Keys[GLFW_KEY_D]) 
+    {
+        if (ballId % 10 == 0) 
+        {
+            ballId = 9;
+        }
+        else 
+        {
+            ballId -= 1;
+        }
+    }
+
 
     glm::mat4 projection = glm::ortho(center.x - static_cast<float>(this->Width) / 2, center.x + static_cast<float>(this->Width) / 2,
         center.y + static_cast<float>(this->Height) / 2, center.y - static_cast<float>(this->Height) / 2, -1.0f, 1.0f);

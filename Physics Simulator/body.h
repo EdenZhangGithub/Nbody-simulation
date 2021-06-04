@@ -10,11 +10,12 @@
 class Body
 {
 public:
-	glm::vec3 Position, Velocity;
-	float Mass;
-	glm::vec2 Size;
+	glm::vec3				Position, Velocity;
+	float					Mass;
+	glm::vec2				Size;
 
-	Texture2D Sprite;
+	Texture2D				Sprite;
+
 
 	Body();
 	Body(glm::vec3 pos, glm::vec3 vel, float mass, Texture2D sprite);

@@ -12,6 +12,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+extern float                Camera_Distance;
+
 // Represents the current state of the game
 enum GameState {
     GAME_ACTIVE,

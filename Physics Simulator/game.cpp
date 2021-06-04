@@ -18,12 +18,14 @@
 
 
 // Game-related State data
-SpriteRenderer* Renderer;
-std::vector<Body> Bodies;
+SpriteRenderer*     Renderer;
+std::vector<Body>   Bodies;
 
-const int BODY_COUNT = 200;
-const float G_CONST = 6.67e-3;
-const float E_CONST = 1e-20;
+const int           BODY_COUNT = 1000;
+const float         G_CONST = 6.67e-3;
+const float         E_CONST = 1e-20;
+
+float               Camera_Distance = 200.0f;
 
 Game::Game(unsigned int width, unsigned int height)
     : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
@@ -98,7 +100,7 @@ void Game::Render()
 }
 
 int ballId = 0;
-float Camera_Distance = 200.0f;
+
 void Game::CenterProjection()
 {
 

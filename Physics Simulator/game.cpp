@@ -18,16 +18,15 @@
 
 
 // Game-related State data
-SpriteRenderer*     Renderer;
-std::vector<Body>   Bodies;
+SpriteRenderer* Renderer;
+std::vector<Body> Bodies;
 
-const int           BODY_COUNT = 100;
-const float         G_CONST = 6.67e-3;
-const float         E_CONST = 1e-20;
+const int BODY_COUNT = 100;
+const float G_CONST = 6.67e-3;
+const float E_CONST = 1e-20;
 
-int                 ballId = 0;
-float               Camera_Distance = 200.0f;
-bool                Paused = false;
+int ballId = 0;
+float Camera_Distance = 200.0f;
 
 Game::Game(unsigned int width, unsigned int height)
     : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
@@ -66,23 +65,27 @@ void Game::Init()
 
 void Game::Update(float dt)
 {
-    for (int i = 0; i < Bodies.size(); ++i)
+    if (!Paused)
     {
-        for (int j = i + 1; j < Bodies.size(); ++j) 
+        for (int i = 0; i < Bodies.size(); ++i)
         {
-            float F = G_CONST * Bodies[i].Mass * Bodies[j].Mass /
-                sqrt(glm::distance2(Bodies[i].Position, Bodies[j].Position) + E_CONST);
+            for (int j = i + 1; j < Bodies.size(); ++j)
+            {
+                float F = G_CONST * Bodies[i].Mass * Bodies[j].Mass /
+                    sqrt(glm::distance2(Bodies[i].Position, Bodies[j].Position) + E_CONST);
 
-            glm::vec3 Direction = glm::normalize(Bodies[i].Position - Bodies[j].Position);
+                glm::vec3 Direction = glm::normalize(Bodies[i].Position - Bodies[j].Position);
 
-            Bodies[i].Velocity -= Direction * F / Bodies[i].Mass;
-            Bodies[j].Velocity += Direction * F / Bodies[j].Mass;
+                Bodies[i].Velocity -= Direction * F / Bodies[i].Mass;
+                Bodies[j].Velocity += Direction * F / Bodies[j].Mass;
+            }
         }
-    }
 
-    for (int i = 0; i < Bodies.size(); ++i)
-    {
-        Bodies[i].Position += Bodies[i].Velocity * dt;
+        for (int i = 0; i < Bodies.size(); ++i)
+        {
+            Bodies[i].Position += Bodies[i].Velocity * dt;
+        }
+
     }
 
     CenterProjection();

@@ -19,6 +19,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
+bool Paused = false;
+
 // The Width of the screen
 const unsigned int SCREEN_WIDTH = 1400;
 // The height of the screen
@@ -110,10 +112,21 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         glfwSetWindowShouldClose(window, true);
     if (key >= 0 && key < 1024)
     {
-        if (action == GLFW_PRESS)
+        if (action == GLFW_PRESS) 
+        {
             NbodySim.Keys[key] = true;
-        else if (action == GLFW_RELEASE)
+
+            if (key == GLFW_KEY_P)
+            {
+                Paused = !Paused;
+            }
+        }
+           
+        else if (action == GLFW_RELEASE) 
+        {
             NbodySim.Keys[key] = false;
+        }
+            
     }
 }
 

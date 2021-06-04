@@ -21,11 +21,13 @@
 SpriteRenderer*     Renderer;
 std::vector<Body>   Bodies;
 
-const int           BODY_COUNT = 1000;
+const int           BODY_COUNT = 100;
 const float         G_CONST = 6.67e-3;
 const float         E_CONST = 1e-20;
 
+int                 ballId = 0;
 float               Camera_Distance = 200.0f;
+bool                Paused = false;
 
 Game::Game(unsigned int width, unsigned int height)
     : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
@@ -88,22 +90,6 @@ void Game::Update(float dt)
 
 void Game::ProcessInput(float dt)
 {
-
-}
-
-void Game::Render()
-{
-    for (int i = 0; i < Bodies.size(); ++i)
-    {
-        Bodies[i].Draw(*Renderer);
-    }
-}
-
-int ballId = 0;
-
-void Game::CenterProjection()
-{
-
     if (this->Keys[GLFW_KEY_A])
     {
         ballId = (ballId + 1) % Bodies.size();
@@ -119,10 +105,24 @@ void Game::CenterProjection()
             ballId -= 1;
         }
     }
-    if (this->Keys[GLFW_KEY_1]) 
+    if (this->Keys[GLFW_KEY_1])
     {
         ballId = 0;
     }
+}
+
+void Game::Render()
+{
+    for (int i = 0; i < Bodies.size(); ++i)
+    {
+        Bodies[i].Draw(*Renderer);
+    }
+}
+
+
+
+void Game::CenterProjection()
+{   
     
     glm::vec3 target = Bodies[ballId].Position;
     glm::vec3 offset = glm::vec3(0.0f, 0.0f, Camera_Distance);

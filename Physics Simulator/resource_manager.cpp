@@ -33,6 +33,8 @@ Shader ResourceManager::GetShader(std::string name)
 
 Texture2D ResourceManager::LoadTexture(const char* file, bool alpha, std::string name)
 {
+    stbi_set_flip_vertically_on_load(true);
+
     Textures[name] = loadTextureFromFile(file, alpha);
     return Textures[name];
 }

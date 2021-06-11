@@ -17,6 +17,9 @@
 // GLFW function declarations
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+bool Paused = false;
 
 // The Width of the screen
 const unsigned int SCREEN_WIDTH = 1400;
@@ -49,6 +52,7 @@ int main(int argc, char* argv[])
 
     glfwSetKeyCallback(window, key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetScrollCallback(window, scroll_callback);
 
     // OpenGL configuration
     // --------------------
@@ -64,6 +68,8 @@ int main(int argc, char* argv[])
     // -------------------
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
+
+    glEnable(GL_DEPTH_TEST);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -85,7 +91,7 @@ int main(int argc, char* argv[])
         // render
         // ------
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         NbodySim.Render();
 
         glfwSwapBuffers(window);
@@ -106,10 +112,21 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         glfwSetWindowShouldClose(window, true);
     if (key >= 0 && key < 1024)
     {
-        if (action == GLFW_PRESS)
+        if (action == GLFW_PRESS) 
+        {
             NbodySim.Keys[key] = true;
-        else if (action == GLFW_RELEASE)
+
+            if (key == GLFW_KEY_P)
+            {
+                Paused = !Paused;
+            }
+        }
+           
+        else if (action == GLFW_RELEASE) 
+        {
             NbodySim.Keys[key] = false;
+        }
+            
     }
 }
 
@@ -118,4 +135,13 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    Camera_Distance -= (float)yoffset;
+    if (Camera_Distance < 1.0f)
+        Camera_Distance = 1.0f;
+    // if (Camera_Distance > 45.0f)
+    //     Camera_Distance = 45.0f;
 }

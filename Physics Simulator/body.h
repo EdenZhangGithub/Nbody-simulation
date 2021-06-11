@@ -10,14 +10,15 @@
 class Body
 {
 public:
-	glm::vec2 Position, Velocity;
+	glm::vec3 Position, Velocity;
 	float Mass;
 	glm::vec2 Size;
 
 	Texture2D Sprite;
 
+
 	Body();
-	Body(glm::vec2 pos, glm::vec2 vel, float mass, Texture2D sprite);
+	Body(glm::vec3 pos, glm::vec3 vel, float mass, Texture2D sprite);
 
 	virtual void Draw(SpriteRenderer& renderer);
 	virtual void Update(float dt);

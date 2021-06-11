@@ -12,6 +12,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+extern float Camera_Distance;
+extern bool Paused;
+
 // Represents the current state of the game
 enum GameState {
     GAME_ACTIVE,
@@ -26,9 +29,10 @@ class Game
 {
 public:
     // game state
-    GameState               State;
-    bool                    Keys[1024];
-    unsigned int            Width, Height;
+    GameState State;
+    bool Keys[1024];
+    unsigned int Width, Height;
+
     // constructor/destructor
     Game(unsigned int width, unsigned int height);
     ~Game();

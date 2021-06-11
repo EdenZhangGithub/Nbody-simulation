@@ -21,12 +21,16 @@
 SpriteRenderer* Renderer;
 std::vector<Body> Bodies;
 
-const int BODY_COUNT = 100;
+const int BODY_COUNT = 200;
 const float G_CONST = 6.67e-3;
 const float E_CONST = 1e-20;
 
 int ballId = 0;
+int prev, after;
+glm::vec3 Start, End;
+
 float Camera_Distance = 200.0f;
+
 
 Game::Game(unsigned int width, unsigned int height)
     : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
@@ -88,30 +92,29 @@ void Game::Update(float dt)
 
     }
 
-    CenterProjection();
+    CenterProjection(dt);
 }
+ 
 
-void Game::ProcessInput(float dt)
+void Game::ProcessInput()
 {
+    
     if (this->Keys[GLFW_KEY_A])
     {
-        ballId = (ballId + 1) % Bodies.size();
+        Transition(ballId, ballId == 0 ? Bodies.size() - 1 : ballId - 1);
+   
     }
     if (this->Keys[GLFW_KEY_D])
     {
-        if (ballId % Bodies.size() == 0)
-        {
-            ballId = Bodies.size() - 1;
-        }
-        else
-        {
-            ballId -= 1;
-        }
+        Transition(ballId, (ballId + 1) % Bodies.size());
+   
     }
     if (this->Keys[GLFW_KEY_1])
     {
-        ballId = 0;
+        Transition(ballId, 0);
+ 
     }
+    
 }
 
 void Game::Render()
@@ -124,12 +127,11 @@ void Game::Render()
 
 
 
-void Game::CenterProjection()
+void Game::CenterProjection(float dt)
 {   
-    
+ 
     glm::vec3 target = Bodies[ballId].Position;
     glm::vec3 offset = glm::vec3(0.0f, 0.0f, Camera_Distance);
-
 
     glm::mat4 view = glm::lookAt(
         target + offset,
@@ -139,7 +141,15 @@ void Game::CenterProjection()
     );
 
    
-
-
     ResourceManager::GetShader("sprite").SetMatrix4("view", view);
+}
+
+void Game::Transition(int prev, int after) 
+{
+    ballId = after;
+    Paused = true;
+
+
+    Start = Bodies[prev].Position;
+    End = Bodies[after].Position;
 }

@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
 
         // manage user input
         // -----------------
-        NbodySim.ProcessInput(deltaTime);
+        NbodySim.ProcessInput();
 
         // update game state
         // -----------------

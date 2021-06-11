@@ -14,6 +14,8 @@
 
 extern float Camera_Distance;
 extern bool Paused;
+extern int ballId;
+extern int prev, after;
 
 // Represents the current state of the game
 enum GameState {
@@ -39,11 +41,12 @@ public:
     // initialize game state (load all shaders/textures/levels)
     void Init();
     // game loop
-    void ProcessInput(float dt);
+    void ProcessInput();
     void Update(float dt);
     void Render();
 
-    void CenterProjection();
+    void CenterProjection(float dt);
+    void Transition(int prev, int after);
 };
 
 #endif

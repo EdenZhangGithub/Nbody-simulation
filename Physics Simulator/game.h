@@ -47,6 +47,8 @@ public:
 
     void CenterProjection(float dt);
     void Transition(int prev, int after);
+
+    void HandleKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mode);
 };
 
 #endif

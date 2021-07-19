@@ -18,6 +18,8 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 
 bool Paused = false;
 
@@ -53,6 +55,8 @@ int main(int argc, char* argv[])
     glfwSetKeyCallback(window, key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetScrollCallback(window, scroll_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwSetCursorPosCallback(window, cursor_position_callback);
 
     // OpenGL configuration
     // --------------------
@@ -146,4 +150,15 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
         Camera_Distance = 1.0f;
     // if (Camera_Distance > 45.0f)
     //     Camera_Distance = 45.0f;
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) 
+{
+    NbodySim.HandleMouseButtonEvent(window, button, action, mods);
+}
+
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    NbodySim.MouseX = xpos;
+    NbodySim.MouseY = ypos;
 }

@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Downloads\src\glad.c" />
+    <ClCompile Include="bhtree.cpp" />
     <ClCompile Include="body.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bhtree.h" />
     <ClInclude Include="body.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="resource_manager.h" />

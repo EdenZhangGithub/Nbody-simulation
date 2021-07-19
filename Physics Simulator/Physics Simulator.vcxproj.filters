@@ -39,6 +39,9 @@
     <ClCompile Include="body.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="bhtree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shader.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="body.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bhtree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
